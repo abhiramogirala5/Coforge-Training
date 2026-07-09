@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>JavaScript DOM Manipulation Assignment</title>
+<script>
+        // 1. Change Heading Text
+        function changeHeading() {
+            document.getElementById("heading").innerHTML = "Welcome to JavaScript DOM";
+        }
+
+        // 2. Change Background Color
+        function changeBackground() {
+            document.body.style.backgroundColor = "lightblue";
+        }
+
+        // 3. Change Image
+        function changeImage() {
+            document.getElementById("image").src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-rTdT2WX-YerT0ldO_FyTb_NKUhhniDuZrrD5FNJlHA&s=10";
+        }
+
+        // 4. Hide Paragraph
+        function hideParagraph() {
+            document.getElementById("para").style.display = "none";
+        }
+
+        // 4. Show Paragraph
+        function showParagraph() {
+            document.getElementById("para").style.display = "block";
+        }
+
+        // 5. Change Font Size
+        function increaseFont() {
+            document.getElementById("fontPara").style.fontSize = "28px";
+        }
+    </script>
+</head>
+<body>
+	 <h1 id="heading">Hello World</h1>
+    <button onclick="changeHeading()">Change Heading</button>
+
+    <hr>
+
+    <button onclick="changeBackground()">Change Background Color</button>
+
+    <hr>
+
+    <img id="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE6kJNbOdTh7CJim_pJdlLOBn-tZ7UGSJS-H9CTzautg&s=10">
+    <br><br>
+    <button onclick="changeImage()">Change Image</button>
+
+    <hr>
+
+    <p id="para">
+        This paragraph can be hidden and shown using the buttons below.
+    </p>
+
+    <button onclick="hideParagraph()">Hide Paragraph</button>
+    <button onclick="showParagraph()">Show Paragraph</button>
+
+    <hr>
+
+    <p id="fontPara">
+        Click the button below to increase my font size.
+    </p>
+
+    <button onclick="increaseFont()">Increase Font Size</button>
+</body>
+</html>
