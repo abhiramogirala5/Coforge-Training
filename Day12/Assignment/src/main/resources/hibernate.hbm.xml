@@ -1,0 +1,19 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.coforge.model.Student" table="tbl_student">
+		<id name="student_id" column="student_id">
+			<generator class="assigned"></generator>
+		</id> <!-- id tag for primary key for others we use property tag -->
+		<property name="student_name" column="student_name"></property>
+	</class>
+	
+	<class name="com.coforge.model.Course" table="tbl_course">
+		<id name="course_id" column="course_id">
+			<generator class="assigned"></generator>
+		</id> <!-- id tag for primary key for others we use property tag -->
+		<property name="course_name" column="course_name"></property>
+	</class>	
+</hibernate-mapping>
