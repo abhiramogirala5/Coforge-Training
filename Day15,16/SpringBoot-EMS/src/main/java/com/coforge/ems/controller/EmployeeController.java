@@ -1,5 +1,6 @@
 package com.coforge.ems.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +104,86 @@ public class EmployeeController {
 			responseEntity = new ResponseEntity<>(environment.getProperty("ems.db.failed"), HttpStatus.BAD_REQUEST);
 		}
 
+		return responseEntity;
+	}
+	
+	@GetMapping("/employees")
+	public ResponseEntity<?> findAllEmployees() {
+		ResponseEntity<?> responseEntity = null;
+
+		try {
+			List<Employee> employees = service.findAllEmployees();
+			responseEntity = new ResponseEntity<>(employees, HttpStatus.OK);
+		} catch (Exception e) {
+			responseEntity = new ResponseEntity<>(environment.getProperty("ems.db.failed"), HttpStatus.BAD_REQUEST);
+		}
+
+		return responseEntity;
+	}
+
+	@GetMapping("/employees/ename/{ename}")
+	public ResponseEntity<?> findByEname(@PathVariable("ename") String ename) {
+		ResponseEntity<?> responseEntity = null;
+
+		try {
+			List<Employee> employees = service.findByEname(ename);
+			responseEntity = new ResponseEntity<>(employees, HttpStatus.OK);
+		} catch (InvalidEmployeeObjectException e) {
+			responseEntity = new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
+		} catch (EmployeeNotFoundException e) {
+			responseEntity = new ResponseEntity<>(e.toString(), HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			responseEntity = new ResponseEntity<>(environment.getProperty("ems.db.failed"), HttpStatus.BAD_REQUEST);
+		}
+
+		return responseEntity;
+	}
+	
+	
+	@DeleteMapping("/employees/ename/{ename}")
+	public ResponseEntity<?> deleteByEname(@PathVariable("ename") String ename) {
+		ResponseEntity<?> responseEntity = null;
+
+		try {
+			boolean status = service.deleteByEname(ename);
+			responseEntity = new ResponseEntity<>(environment.getProperty("ems.delete.success"), HttpStatus.OK);
+		} catch (InvalidEmployeeObjectException e) {
+			responseEntity = new ResponseEntity<>(e.toString(), HttpStatus.BAD_REQUEST);
+		}catch (EmployeeNotFoundException e) {
+			responseEntity = new ResponseEntity<>(e.toString(), HttpStatus.NOT_FOUND);
+		}catch (Exception e) {
+			responseEntity = new ResponseEntity<>(environment.getProperty("ems.db.failed"), HttpStatus.BAD_REQUEST);
+		}
+
+		return responseEntity;
+	}
+	
+	@GetMapping("/employees/eids")
+	public ResponseEntity<?> getEidsList(){
+		ResponseEntity<?> responseEntity = null;
+		
+		try {
+		List<Integer> eids = service.getEidsList();
+		responseEntity = new ResponseEntity<>(eids, HttpStatus.OK);
+		}catch(Exception e) {
+			responseEntity = new ResponseEntity<>(environment.getProperty("ems.db.failed"), HttpStatus.BAD_REQUEST);
+		}
+		
+		return responseEntity;
+	}
+	
+	
+	@GetMapping("/employees/info")
+	public ResponseEntity<?> getInfo(){
+		ResponseEntity<?> responseEntity = null;
+		
+		try {
+		String info = service.getInfo();
+		responseEntity = new ResponseEntity<>(info, HttpStatus.OK);
+		}catch(Exception e) {
+			responseEntity = new ResponseEntity<>(environment.getProperty("ems.db.failed"), HttpStatus.BAD_REQUEST);
+		}
+		
 		return responseEntity;
 	}
 	

@@ -1,5 +1,6 @@
 package com.coforge.ems.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import com.coforge.ems.exception.EmployeeNotFoundException;
 import com.coforge.ems.exception.InvalidEmployeeObjectException;
 import com.coforge.ems.model.Employee;
 import com.coforge.ems.repo.EmployeeRepo;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -74,6 +77,50 @@ public class EmployeeServiceImpl implements EmployeeService {
 		} else {
 			throw new InvalidEmployeeObjectException();
 		}
+	}
+	
+	@Override
+	public List<Employee> findAllEmployees() {
+		List<Employee> employees = (List<Employee>) repo.findAll();
+		return employees;
+	}
+
+	@Override
+	public List<Employee> findByEname(String ename) throws InvalidEmployeeObjectException, EmployeeNotFoundException {
+		if (ename != null) {
+			List<Employee> employees = repo.findByEname(ename);
+			if (employees.isEmpty()) {
+				throw new EmployeeNotFoundException();
+			}
+			return employees;
+		} else {
+			throw new InvalidEmployeeObjectException();
+		}
+	}
+
+	@Override
+	@Transactional
+	public boolean deleteByEname(String ename) throws InvalidEmployeeObjectException, EmployeeNotFoundException {
+		if (ename != null) {
+			int n = repo.deleteByEname(ename);
+			if(n == 0) {
+				throw new EmployeeNotFoundException();
+			}
+			return true;
+		} else {
+			throw new InvalidEmployeeObjectException();
+		}
+	}
+
+	@Override
+	public List<Integer> getEidsList() {
+		List<Integer> eids = repo.getEids();
+		return eids;
+	}
+
+	@Override
+	public String getInfo() {
+		return repo.getInfo();
 	}
 
 }
