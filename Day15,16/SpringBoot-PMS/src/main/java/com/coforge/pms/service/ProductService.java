@@ -1,78 +1,41 @@
 package com.coforge.pms.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
+import com.coforge.pms.exception.InvalidProductObjectException;
+import com.coforge.pms.exception.ProductNotFoundException;
 import com.coforge.pms.model.Product;
 
-@Service
-public class ProductService {
+public interface ProductService {
 
-    private Map<Integer, Product> map = new HashMap<>();
+	public boolean saveProduct(Product product) throws InvalidProductObjectException;
 
-    // INSERT
-    public boolean createProduct(Product product) {
+	public boolean updateProduct(int pid, Product product)
+			throws InvalidProductObjectException, ProductNotFoundException;
 
-        // Product ID should be unique
-        if (map.containsKey(product.getpid()))
-            return false;
+	public boolean deleteProductById(int pid)
+			throws InvalidProductObjectException, ProductNotFoundException;
 
-        // Validation
-        if (product.getProductName() == null || product.getProductName().trim().isEmpty())
-            return false;
+	public Optional<Product> findByPid(int pid)
+			throws ProductNotFoundException, InvalidProductObjectException;
 
-        if (product.getProductPrice() <= 0)
-            return false;
+	public List<Product> findAllProducts();
 
-        if (product.getProductQuantity() <= 0)
-            return false;
+	public List<Product> findByPname(String pname)
+			throws InvalidProductObjectException, ProductNotFoundException;
 
-        map.put(product.getpid(), product);
-        return true;
-    }
+	public boolean deleteByPname(String pname)
+			throws InvalidProductObjectException, ProductNotFoundException;
 
-    // DELETE
-    public boolean deleteProduct(int pid) {
+	public List<Product> findByPquantity(int pquantity)
+			throws InvalidProductObjectException, ProductNotFoundException;
 
-        if (map.containsKey(pid)) {
-            map.remove(pid);
-            return true;
-        }
+	public List<Product> findByPriceRange(double minPrice, double maxPrice)
+			throws InvalidProductObjectException, ProductNotFoundException;
 
-        return false;
-    }
+	public List<Integer> getPidsList();
 
-    // UPDATE
-    public boolean updateProduct(Product product) {
+	public String getInfo();
 
-        if (!map.containsKey(product.getpid()))
-            return false;
-
-        if (product.getProductName() == null || product.getProductName().trim().isEmpty())
-            return false;
-
-        if (product.getProductPrice() <= 0)
-            return false;
-
-        if (product.getProductQuantity() <= 0)
-            return false;
-
-        map.put(product.getpid(), product);
-
-        return true;
-    }
-
-    // FIND
-    public Product findProduct(int pid) {
-        return map.get(pid);
-    }
-
-    // FIND ALL
-    public List<Product> findAllProducts() {
-        return new ArrayList<>(map.values());
-    }
 }
