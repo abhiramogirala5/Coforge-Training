@@ -4,6 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name="tbl_employee")
@@ -11,15 +14,19 @@ public class Employee {
 	
 	@Id
 	@Column(name="eid" , length=5)
+	@NotNull
 	private int eid;
 	
 	@Column(name="ename" , length=100)
+	@NotBlank
 	private String ename;
 	
 	@Column(name="salary" , length=5)
+	@Positive
 	private int esalary;
 	
 	@Column(name="dno" , length=5)
+	@Positive
 	private int dno;
 
 	public Employee() {

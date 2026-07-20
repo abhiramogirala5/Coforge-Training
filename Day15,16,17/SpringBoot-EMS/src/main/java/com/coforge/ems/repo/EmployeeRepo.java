@@ -26,6 +26,6 @@ public interface EmployeeRepo extends CrudRepository<Employee, Integer> { //Same
 	@Query("select eid from Employee")
 	public List<Integer> getEids();
 	
-	@Query("select count(*), sum(salary), min(salary), max(salary) from Employee")
+	@Query("select count(*), sum(esalary), min(esalary), max(esalary) from Employee")
 	public String getInfo();
 }
